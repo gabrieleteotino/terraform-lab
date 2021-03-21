@@ -1,3 +1,8 @@
+# Uncomment this block to enable testing this module in isolation 
+# provider "azurerm" {
+#   features {}
+# }
+
 resource "random_string" "postfix" {
   length  = 6
   lower   = true
@@ -12,6 +17,17 @@ resource "azurerm_storage_account" "motstorage" {
   resource_group_name      = var.resource_group_name
   account_tier             = "Standard"
   account_replication_type = "LRS"
+}
+
+resource "azurerm_storage_account_network_rules" "netrules" {
+  count                = length(var.subnet_ids) > 0 ? 1 : 0
+  
+  resource_group_name  = var.resource_group_name
+  storage_account_name = azurerm_storage_account.motstorage.name
+
+  default_action             = "Deny"
+  virtual_network_subnet_ids = var.subnet_ids
+  bypass                     = ["AzureServices"]
 }
 
 resource "azurerm_storage_container" "container" {

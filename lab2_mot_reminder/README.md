@@ -53,7 +53,9 @@ terraform init --backend-config=backend_config.tfvars
 
 ### Testing submodules
 
-To test a submodule put appropriate values in the variables file `[submodulefolder]\debug.terraform.tfvars`
+Edit `[submodulefolder]\main.ft` and uncomment the provider module
+
+Put appropriate values in the variables file `[submodulefolder]\debug.terraform.tfvars`
 
 ```
 terraform init
@@ -72,9 +74,18 @@ terraform apply -var-file="debug.terraform.tfvars"
 terraform apply -var-file="debug.terraform.tfvars" --auto-approve
 ```
 
-When the testing is finished remember to destroy the debug resources
+When the testing is finished remember to 
+
+1. Edit `[submodulefolder]\main.ft` and comment the provider module
+2. destroy the debug resources
 
 ```
 terraform destroy -var-file="debug.terraform.tfvars"
 terraform destroy -var-file="debug.terraform.tfvars" --auto-approve
 ```
+
+### Subnet rules
+
+After the storage account is created in a subnet to allow terraform to continue working from the current machine we need to add our current ip to the network rules.
+
+Using the portal: go in the storage account, select `Networking`, the in the `Firewall` section click `Add you client IP address` and then save.
