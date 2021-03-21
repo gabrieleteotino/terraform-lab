@@ -20,8 +20,8 @@ resource "azurerm_storage_account" "motstorage" {
 }
 
 resource "azurerm_storage_account_network_rules" "netrules" {
-  count                = length(var.subnet_ids) > 0 ? 1 : 0
-  
+  count = length(var.subnet_ids) > 0 ? 1 : 0
+
   resource_group_name  = var.resource_group_name
   storage_account_name = azurerm_storage_account.motstorage.name
 
