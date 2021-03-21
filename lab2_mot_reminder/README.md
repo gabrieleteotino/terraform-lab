@@ -1,7 +1,13 @@
+# MOT Reminder
+
 ## Prerequisite
 
 Have az installed
 Have az logged in
+
+## What will be created
+
+TODO complete the list of reaources that will be created by running the terraform scripts
 
 ## Bootstrapping
 
