@@ -50,3 +50,31 @@ Initialize the remote backend
 cd mot_reminder
 terraform init --backend-config=backend_config.tfvars
 ```
+
+### Testing submodules
+
+To test a submodule put appropriate values in the variables file `[submodulefolder]\debug.terraform.tfvars`
+
+```
+terraform init
+terraform plan -var-file="debug.terraform.tfvars"
+```
+
+Before running `apply` manually create all the resources needed by the submodule.
+
+For example most submodules require a resource group to exist. Other needed resources can be inferred looking at the variables.
+
+When all the required resources are created yun can deploy the submodule
+
+```
+terraform plan -var-file="debug.terraform.tfvars"
+terraform apply -var-file="debug.terraform.tfvars"
+terraform apply -var-file="debug.terraform.tfvars" --auto-approve
+```
+
+When the testing is finished remember to destroy the debug resources
+
+```
+terraform destroy -var-file="debug.terraform.tfvars"
+terraform destroy -var-file="debug.terraform.tfvars" --auto-approve
+```
