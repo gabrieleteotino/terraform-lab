@@ -13,7 +13,7 @@ resource "azurerm_resource_group" "rg_mot_func" {
 }
 
 module "appinsights" {
-  source = "./appinsights"
+  source              = "./appinsights"
   resource_group_name = azurerm_resource_group.rg_mot.name
   location            = var.location
 }
@@ -36,4 +36,5 @@ module "function" {
   resource_group_name = azurerm_resource_group.rg_mot_func.name
   location            = var.location
   subnet_id           = module.vnet.subnet_functions_id
+  appinsights_key     = module.appinsights.instrumentation_key
 }

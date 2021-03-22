@@ -37,13 +37,19 @@ resource "azurerm_function_app" "function" {
   app_service_plan_id        = azurerm_app_service_plan.service_plan.id
   storage_account_name       = azurerm_storage_account.storage.name
   storage_account_access_key = azurerm_storage_account.storage.primary_access_key
-  https_only                 = true
+
+  https_only = true
+  app_settings = {
+    #"WEBSITE_RUN_FROM_PACKAGE" = "1", 
+    "FUNCTIONS_WORKER_RUNTIME"       = "dotnet",
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = var.appinsights_key
+  }
   site_config {
     always_on = true
   }
 }
 
-resource "azurerm_app_service_virtual_network_swift_connection" "example" {
+resource "azurerm_app_service_virtual_network_swift_connection" "subnet_connection" {
   app_service_id = azurerm_function_app.function.id
   subnet_id      = var.subnet_id
 }
