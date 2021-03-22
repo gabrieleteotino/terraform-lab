@@ -12,6 +12,12 @@ resource "azurerm_resource_group" "rg_mot_func" {
   location = var.location
 }
 
+module "appinsights" {
+  source = "./appinsights"
+  resource_group_name = azurerm_resource_group.rg_mot.name
+  location            = var.location
+}
+
 module "vnet" {
   source              = "./vnet"
   resource_group_name = azurerm_resource_group.rg_mot.name
