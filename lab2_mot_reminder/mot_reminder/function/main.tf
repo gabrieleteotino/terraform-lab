@@ -37,12 +37,12 @@ resource "azurerm_function_app" "function" {
   app_service_plan_id        = azurerm_app_service_plan.service_plan.id
   storage_account_name       = azurerm_storage_account.storage.name
   storage_account_access_key = azurerm_storage_account.storage.primary_access_key
-
-  https_only = true
+  https_only                 = true
+  version                    = "~3"
   app_settings = {
-    #"WEBSITE_RUN_FROM_PACKAGE" = "1", 
-    "FUNCTIONS_WORKER_RUNTIME"       = "dotnet",
-    "APPINSIGHTS_INSTRUMENTATIONKEY" = var.appinsights_key
+    FUNCTIONS_WORKER_RUNTIME = "dotnet",
+    APPINSIGHTS_INSTRUMENTATIONKEY      = var.appinsights_key
+    EXTERNAL_STORAGE_ACCOUNT_CONNECTION = var.external_storage_account_connection
   }
   site_config {
     always_on = true

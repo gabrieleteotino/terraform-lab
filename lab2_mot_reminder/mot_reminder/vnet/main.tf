@@ -5,19 +5,12 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = var.resource_group_name
 }
 
-resource "azurerm_subnet" "storageservices" {
+resource "azurerm_subnet" "mot" {
   name                 = "storageservices"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
   service_endpoints    = ["Microsoft.Storage"]
-}
-
-resource "azurerm_subnet" "functions" {
-  name                 = "functions"
-  resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.2.0/24"]
 
   delegation {
     name = "delegation"

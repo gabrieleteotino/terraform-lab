@@ -28,13 +28,14 @@ module "storageservices" {
   source              = "./storageservices"
   resource_group_name = azurerm_resource_group.rg_mot.name
   location            = var.location
-  subnet_ids          = [module.vnet.subnet_storageservices_id]
+  subnet_ids          = [module.vnet.subnet_mot_id]
 }
 
 module "function" {
-  source              = "./function"
-  resource_group_name = azurerm_resource_group.rg_mot_func.name
-  location            = var.location
-  subnet_id           = module.vnet.subnet_functions_id
-  appinsights_key     = module.appinsights.instrumentation_key
+  source                              = "./function"
+  resource_group_name                 = azurerm_resource_group.rg_mot_func.name
+  location                            = var.location
+  subnet_id                           = module.vnet.subnet_mot_id
+  appinsights_key                     = module.appinsights.instrumentation_key
+  external_storage_account_connection = module.storageservices.connection_string
 }

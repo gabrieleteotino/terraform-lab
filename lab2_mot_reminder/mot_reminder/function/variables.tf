@@ -17,3 +17,11 @@ variable "subnet_id" {
 variable "appinsights_key" {
   type = string
 }
+
+variable "external_storage_account_connection" {
+  type = string
+  validation {
+    condition = length(var.external_storage_account_connection) > 0
+    error_message = "The connection string cannot be empty."
+  }
+}
