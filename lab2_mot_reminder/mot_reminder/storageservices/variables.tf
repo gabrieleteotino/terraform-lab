@@ -18,3 +18,9 @@ variable "subnet_ids" {
   type    = list(string)
   default = []
 }
+
+variable "allowed_ips" {
+  type    = set(string)
+  default = []
+  description = "Set of public IPv4 address that can access the public endpoint of the Storage Account. Used only if use_subnet is true."
+}

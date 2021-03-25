@@ -7,6 +7,13 @@ locals {
   name_postfix = terraform.workspace == "default" ? "dev" : terraform.workspace
   function_sku = var.config[terraform.workspace].function_sku
   subnet_id    = local.use_vnet ? module.vnet[0].subnet_mot_id : ""
+  allowed_ips  = local.use_vnet ? [data.external.myip[0].result.address] : []
+}
+
+data "external" "myip" {
+  count = local.use_vnet ? 1 : 0
+
+  program = ["Powershell.exe", "./myip.ps1"]
 }
 
 resource "azurerm_resource_group" "rg_mot" {
@@ -39,6 +46,7 @@ module "storageservices" {
   location            = var.location
   use_subnet          = local.use_vnet
   subnet_ids          = [local.subnet_id]
+  allowed_ips         = local.allowed_ips
 }
 
 module "function" {
