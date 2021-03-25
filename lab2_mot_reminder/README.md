@@ -89,3 +89,18 @@ terraform destroy -var-file="debug.terraform.tfvars" --auto-approve
 After the storage account is created in a subnet to allow terraform to continue working from the current machine we need to add our current ip to the network rules.
 
 Using the portal: go in the storage account, select `Networking`, the in the `Firewall` section click `Add you client IP address` and then save.
+
+## Workspace
+
+There are two different workspaces defined. 
+
+1. `default` will deploy without any subnet and with a function App with a consumption plan
+2. `prod` will deploy all the storage accounts in a subnet and a Function App with a premium plan
+
+```
+terraform workspace list
+terraform workspace show
+terraform workspace select default
+terraform workspace select prod
+#terraform workspace new prod
+```

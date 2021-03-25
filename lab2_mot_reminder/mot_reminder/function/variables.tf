@@ -10,6 +10,10 @@ variable "location" {
   type = string
 }
 
+variable "use_subnet" {
+  type = bool
+}
+
 variable "subnet_id" {
   type = string
 }
@@ -21,7 +25,15 @@ variable "appinsights_key" {
 variable "external_storage_account_connection" {
   type = string
   validation {
-    condition = length(var.external_storage_account_connection) > 0
+    condition     = length(var.external_storage_account_connection) > 0
     error_message = "The connection string cannot be empty."
+  }
+}
+
+variable "sku" {
+  type = map
+  validation {
+    condition     = length(var.sku.tier) > 0 && length(var.sku.size) > 0
+    error_message = "The sku must contain tier and size."
   }
 }

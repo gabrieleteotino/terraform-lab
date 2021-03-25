@@ -40,7 +40,7 @@ resource "azurerm_function_app" "function" {
   https_only                 = true
   version                    = "~3"
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME = "dotnet",
+    FUNCTIONS_WORKER_RUNTIME            = "dotnet",
     APPINSIGHTS_INSTRUMENTATIONKEY      = var.appinsights_key
     EXTERNAL_STORAGE_ACCOUNT_CONNECTION = var.external_storage_account_connection
   }
@@ -50,6 +50,8 @@ resource "azurerm_function_app" "function" {
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "subnet_connection" {
+  count = var.use_subnet ? 1 : 0
+
   app_service_id = azurerm_function_app.function.id
   subnet_id      = var.subnet_id
 }

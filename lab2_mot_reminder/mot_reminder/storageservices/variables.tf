@@ -10,6 +10,10 @@ variable "location" {
   type = string
 }
 
+variable "use_subnet" {
+  type = bool
+}
+
 variable "subnet_ids" {
   type    = list(string)
   default = []
