@@ -23,10 +23,9 @@ resource "azurerm_app_service_plan" "service_plan" {
   name                = "asp-mot-${random_string.postfix.id}"
   location            = var.location
   resource_group_name = var.resource_group_name
-
   sku {
-    tier = "PremiumV2"
-    size = "P1v2"
+    tier = var.sku.tier
+    size = var.sku.size
   }
 }
 
@@ -45,7 +44,7 @@ resource "azurerm_function_app" "function" {
     EXTERNAL_STORAGE_ACCOUNT_CONNECTION = var.external_storage_account_connection
   }
   site_config {
-    always_on = true
+    always_on = false
   }
 }
 

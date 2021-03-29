@@ -13,8 +13,8 @@ variable "config" {
     "default" = {
       "use_vnet" = false
       "function_sku" = {
-        "tier" = "Standard"
-        "size" = "S1"
+        "tier" = "Free"
+        "size" = "F1"
       }
     }
     "prod" = {
