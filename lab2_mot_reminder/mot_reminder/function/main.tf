@@ -42,6 +42,7 @@ resource "azurerm_function_app" "function" {
     FUNCTIONS_WORKER_RUNTIME            = "dotnet",
     APPINSIGHTS_INSTRUMENTATIONKEY      = var.appinsights_key
     EXTERNAL_STORAGE_ACCOUNT_CONNECTION = var.external_storage_account_connection
+    "WEBSITE_RUN_FROM_PACKAGE"          = "1"
   }
   site_config {
     always_on = false
